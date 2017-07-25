@@ -1,0 +1,33 @@
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 2
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/code
+      to: /home/ubuntu/htdocs
+
+#sites:
+#    - map: homestead.app
+#      to: /home/vagrant/Code/Laravel/public
+
+databases:
+    - atm
+nginx:
+    - default
+php:
+    - type: nts
+      version: 7.1.7
+
+copy:
+    - from: ./scripts/config
+      to: /tmp
+other:
+     - mc
+       git
