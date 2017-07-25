@@ -8,3 +8,6 @@ curl http://nginx.org/keys/nginx_signing.key | apt-key add -
 apt-get update && apt-get upgrade -y
 
 apt-get install nginx -y
+
+rm -rf /etc/nginx/
+cp -rf /tmp/config/nginx/ /etc/

@@ -56,7 +56,7 @@ class Homestead
 
         # Configure A Few Parallels Settings
         config.vm.provider "parallels" do |v|
-            v.name = settings["name"] ||= "homestead-7"
+            v.name = settings["name"] ||= "wearelt"
             v.update_guest_tools = settings["update_parallels_tools"] ||= false
             v.memory = settings["memory"] ||= 2048
             v.cpus = settings["cpus"] ||= 1
@@ -75,9 +75,6 @@ class Homestead
 
         # Default Port Forwarding
         default_ports = {
-            80 => 8000,
-            443 => 44300,
-            5432 => 54320,
         }
 
         # Use Default Port Forwarding Unless Overridden
@@ -161,15 +158,44 @@ class Homestead
         end
 
 
+
+
+
+
+
+        #if settings.has_key?("config")
+        #    settings["config"].each do |config|
+        #        config.vm.provision "fix-no-tty", type:"shell" do |s|
+        #            s.privileged = true
+        #            s.path = scriptDir + "/create-config.sh"
+        #        end
+        #    end
+        #end
+
+
+
         #config.vm.provision "shell" do |s|
         #    s.name = "Restarting Nginx"
         #    s.inline = "sudo service nginx restart; sudo service php7.1-fpm restart"
         #end
 
-        # Configure All Of The Configured Databases
+
+
+
+        # Copy User Files Over to VM
+        if settings.include? 'copy'
+            settings["copy"].each do |file|
+                config.vm.provision "file" do |f|
+                    f.source = File.expand_path(file["from"])
+                    f.destination = file["to"].chomp('/') + "/" + file["from"].split('/').last
+                end
+            end
+        end
+
         if settings.has_key?("nginx")
             settings["nginx"].each do |site|
                 config.vm.provision "shell" do |s|
+                    s.privileged = true
                     s.name = "Creating nginx: "
                     s.path = scriptDir + "/create-nginx.sh"
                 end
@@ -180,6 +206,7 @@ class Homestead
 
         if settings.has_key?("php")
             config.vm.provision "shell" do |s|
+                s.privileged = true
                 s.path = scriptDir + "/create-php.sh"
                 s.args = [
                     settings["php"][0]["type"],
@@ -202,39 +229,16 @@ class Homestead
         end
 
 
-        # Copy User Files Over to VM
-        if settings.include? 'copy'
-            settings["copy"].each do |file|
-                config.vm.provision "file" do |f|
-                    f.source = File.expand_path(file["from"])
-                    f.destination = file["to"].chomp('/') + "/" + file["from"].split('/').last
-                end
-            end
-        end
 
         if settings.has_key?("other")
-            settings["other"].each do |db|
+            settings["other"].each do |other|
                 config.vm.provision "fix-no-tty", type:"shell" do |s|
+                    s.name = "Install Others utils: " + other
                     s.privileged = true
                     s.path = scriptDir + "/create-other.sh"
                 end
             end
         end
-
-
-
-        if settings.has_key?("config")
-            settings["config"].each do |db|
-                config.vm.provision "fix-no-tty", type:"shell" do |s|
-                    s.privileged = true
-                    s.path = scriptDir + "/create-config.sh"
-                end
-            end
-        end
-
-
-
-
 
 
 
@@ -261,23 +265,20 @@ class Homestead
         #end
 
         # Update Composer On Every Provision
+
+        #config.vm.provision "shell" do |s|
+        #    s.name = "Update Composer"
+        #    s.inline = "sudo /usr/local/bin/composer self-update && sudo chown -R ubuntu:ubuntu /home/ubuntu/ && mkdir /home/ubuntu/run/ && mkdir /home/ubuntu/log/ && mkdir /home/ubuntu/tmp/"
+        #end
+
+
         config.vm.provision "shell" do |s|
-            s.name = "Update Composer"
-            s.inline = "sudo /usr/local/bin/composer self-update && sudo chown -R ubuntu:ubuntu /home/ubuntu/.composer/"
-            s.privileged = false
+            s.name = "Reload services : "
+            s.privileged = true
+            s.inline = "service php7.1-fpm restart && service nginx restart && service postgresql restart"
         end
 
-        # Configure Blackfire.io
-        if settings.has_key?("blackfire")
-            config.vm.provision "shell" do |s|
-                s.path = scriptDir + "/blackfire.sh"
-                s.args = [
-                    settings["blackfire"][0]["id"],
-                    settings["blackfire"][0]["token"],
-                    settings["blackfire"][0]["client-id"],
-                    settings["blackfire"][0]["client-token"]
-                ]
-            end
-        end
+
+
     end
 end
