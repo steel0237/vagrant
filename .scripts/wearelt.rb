@@ -1,5 +1,5 @@
-class Homestead
-    def Homestead.configure(config, settings)
+class Wearelt
+    def Wearelt.configure(config, settings)
         # Set The VM Provider
         ENV['VAGRANT_DEFAULT_PROVIDER'] = settings["provider"] ||= "virtualbox"
 
