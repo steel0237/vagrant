@@ -241,6 +241,56 @@ class Wearelt
         end
 
 
+        if settings.include? 'sites'
+            settings["sites"].each do |site|
+
+                # Create SSL certificate
+                #config.vm.provision "shell" do |s|
+                    #s.name = "Creating Certificate: " + site["map"]
+                    #s.path = scriptDir + "/create-certificate.sh"
+                    #s.args = [site["map"]]
+                #end
+
+                config.vm.provision "shell" do |s|
+                    s.name = "Creating Site: " + site["map"]
+                    s.privileged = true
+                    if site.include? 'params'
+                        params = "("
+                        site["params"].each do |param|
+                            params += " [" + param["key"] + "]=" + param["value"]
+                        end
+                        params += " )"
+                    end
+                    s.path = scriptDir + "/create-site.sh"
+                    s.args = [site["map"], site["to"], site["port"] ||= "80", site["ssl"] ||= "443", params ||= ""]
+                end
+            end
+        end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

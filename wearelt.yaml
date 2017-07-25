@@ -10,12 +10,15 @@ keys:
     - ~/.ssh/id_rsa
 
 folders:
-    - map: ~/code
+    - map: ./
       to: /home/ubuntu/htdocs
 
-#sites:
-#    - map: homestead.app
-#      to: /home/vagrant/Code/Laravel/public
+sites:
+    - map: test.local
+      to: /home/ubuntu/htdocs/public
+    - map: test1.local
+      to: /home/ubuntu/htdocs/public-1
+
 
 databases:
     - atm
