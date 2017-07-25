@@ -214,7 +214,7 @@ class Wearelt
 
         if settings.has_key?("other")
             settings["other"].each do |other|
-                config.vm.provision "fix-no-tty", type:"shell" do |s|
+                config.vm.provision "shell" do |s|
                     s.name = "Install Others utils: " + other
                     s.privileged = true
                     s.path = scriptDir + "/create-other.sh"

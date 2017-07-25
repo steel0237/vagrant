@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-#/etc/apt/sources.list.d/ondrej-ubuntu-php-xenial.list
-#deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main
 
-type=$1;
-
+if [[ ! `dpkg --get-selections $1` ]]; then
 apt-get install -y $1
+fi
 
 if [[ ! -f /usr/bin/git ]]; then
 ufw disable

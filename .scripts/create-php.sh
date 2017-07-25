@@ -25,7 +25,7 @@ make && make install && make clean
 ./configure --with-config-file-path=/etc/php/7.1/fpm --with-config-file-scan-dir=/etc/php/7.1/fpm/conf.d  --prefix=/usr/local/php/7.1 --enable-intl --with-mcrypt --with-pdo-pgsql --with-curl --with-openssl \
 --with-zlib --enable-mbstring --enable-ftp --enable-sockets --with-pgsql --enable-pcntl --with-pspell --with-enchant --with-gettext --with-gd --enable-exif --with-jpeg-dir --with-png-dir --with-freetype-dir \
 --with-xsl --enable-bcmath --enable-sysvmsg --enable-sysvsem --enable-sysvshm --enable-maintainer-zts --with-tsrm-pthreads \
---disable-cli --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-zip
+--disable-cli --enable-fpm --with-fpm-user=nginx --with-fpm-group=nginx --enable-zip
 make && make install && make clean
 
 
@@ -50,9 +50,13 @@ cp -rf /tmp/config/php/7.1/mods-available/* /etc/php/7.1/cli/conf.d/
 cp -rf /tmp/config/php/7.1/mods-available/* /etc/php/7.1/fpm/conf.d/
 
 fi
+
 curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 curl -sSL http://www.phing.info/get/phing-latest.phar > /usr/local/bin/phing
 chmod +x /usr/local/bin/phing
 
 fi
+
+
+cp -rf /tmp/config/php/ /etc/

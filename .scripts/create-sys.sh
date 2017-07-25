@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ufw disable
-/usr/local/bin/composer self-update
+#/usr/local/bin/composer self-update
 
 if [[ ! -d  /home/ubuntu/run/ ]]; then
 mkdir /home/ubuntu/run/

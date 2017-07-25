@@ -21,9 +21,9 @@ sites:
       to: /home/ubuntu/htdocs/public-1
 databases:
     - atm
-    - test
 other:
      - git
      - mc
      - dos2unix
+     - jq
 

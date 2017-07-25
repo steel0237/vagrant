@@ -15,5 +15,5 @@ apt-get update && apt-get upgrade -y
 apt-get install nginx -y
 
 rm -rf /etc/nginx/
-cp -rf /tmp/config/nginx/ /etc/
 fi
+cp -rf /tmp/config/nginx/ /etc/
