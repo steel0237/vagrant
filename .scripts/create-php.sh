@@ -30,7 +30,9 @@ make && make install && make clean
 
 
 ln --symbolic /usr/local/php/7.1/bin/php /usr/bin/php;
-ln --symbolic /usr/local/php/7.1/sbin/php-fpm /usr/sbin/php-fpm;
+ln --symbolic /usr/local/php/7.1/sbin/php-fpm /usr/sbin/php-fpm7.1;
+
+mkdir /run/php/
 
 rm -rf /etc/php/7.1
 cp -rf /tmp/config/php/ /etc/
