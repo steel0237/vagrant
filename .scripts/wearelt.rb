@@ -11,6 +11,7 @@ class Wearelt
 
         # Allow SSH Agent Forward from The Box
         config.ssh.forward_agent = true
+        config.ssh.username = "ubuntu"
 
         # Configure The Box
         config.vm.define settings["name"] ||= "wearelt"
@@ -36,6 +37,7 @@ class Wearelt
             vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
             vb.customize ["modifyvm", :id, "--natdnshostresolver1", settings["natdnshostresolver"] ||= "on"]
             vb.customize ["modifyvm", :id, "--ostype", "Ubuntu_64"]
+            vb.customize ["modifyvm", :id, "--uartmode1", "disconnected" ]
             if settings.has_key?("gui") && settings["gui"]
                 vb.gui = true
             end
