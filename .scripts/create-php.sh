@@ -3,9 +3,10 @@
 #/etc/apt/sources.list.d/ondrej-ubuntu-php-xenial.list
 #deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main
 
-type=$1;
-ver=$2;
+type="nts";
+ver="7.1.7";
 
+if [[ ! -f /usr/bin/php ]]; then
 
 if [[ $type == "zts" ]]; then
 #add-apt-repository -y ppa:ondrej/php-$type
@@ -53,3 +54,5 @@ curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 curl -sSL http://www.phing.info/get/phing-latest.phar > /usr/local/bin/phing
 chmod +x /usr/local/bin/phing
+
+fi

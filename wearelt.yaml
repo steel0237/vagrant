@@ -3,6 +3,8 @@ ip: "192.168.10.10"
 memory: 2048
 cpus: 2
 provider: virtualbox
+name: wearelt
+hostname: wearelt
 
 authorize: ~/.ssh/id_rsa.pub
 
@@ -10,27 +12,18 @@ keys:
     - ~/.ssh/id_rsa
 
 folders:
-    - map: ./
-      to: /home/ubuntu/htdocs
-
+      - map: ./
+        to: /home/ubuntu/htdocs
 sites:
     - map: test.local
       to: /home/ubuntu/htdocs/public
     - map: test1.local
       to: /home/ubuntu/htdocs/public-1
-
-
 databases:
     - atm
-nginx:
-    - default
-php:
-    - type: nts
-      version: 7.1.7
-
-copy:
-    - from: ./.scripts/config
-      to: /tmp
+    - test
 other:
+     - git
      - mc
-       git
+     - dos2unix
+

@@ -178,43 +178,27 @@ class Wearelt
         #    s.name = "Restarting Nginx"
         #    s.inline = "sudo service nginx restart; sudo service php7.1-fpm restart"
         #end
-
-
-
-
-        # Copy User Files Over to VM
-        if settings.include? 'copy'
-            settings["copy"].each do |file|
                 config.vm.provision "file" do |f|
-                    f.source = File.expand_path(file["from"])
-                    f.destination = file["to"].chomp('/') + "/" + file["from"].split('/').last
+                    f.source = File.expand_path("./.scripts/config")
+                    f.destination = "/tmp/"
                 end
-            end
-        end
 
-        if settings.has_key?("nginx")
-            settings["nginx"].each do |site|
                 config.vm.provision "shell" do |s|
                     s.privileged = true
                     s.name = "Creating nginx: "
                     s.path = scriptDir + "/create-nginx.sh"
                 end
 
-            end
-        end
 
-
-        if settings.has_key?("php")
             config.vm.provision "shell" do |s|
                 s.privileged = true
                 s.path = scriptDir + "/create-php.sh"
-                s.args = [
-                    settings["php"][0]["type"],
-                    settings["php"][0]["version"],
-                ]
             end
-        end
 
+            config.vm.provision "shell" do |s|
+                s.privileged = true
+                s.path = scriptDir + "/create-sys.sh"
+            end
 
         # Configure All Of The Configured Databases
         if settings.has_key?("databases")
@@ -228,14 +212,13 @@ class Wearelt
             end
         end
 
-
-
         if settings.has_key?("other")
             settings["other"].each do |other|
                 config.vm.provision "fix-no-tty", type:"shell" do |s|
                     s.name = "Install Others utils: " + other
                     s.privileged = true
                     s.path = scriptDir + "/create-other.sh"
+                    s.args = [other]
                 end
             end
         end
@@ -266,33 +249,6 @@ class Wearelt
                 end
             end
         end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 #config.vm.provision "shell" do |s|

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 DB=$1;
+
 # su postgres -c "dropdb $DB --if-exists"
+if [[ ! -f /usr/bin/psql ]]; then
+echo "Install Postgresql"
 locale-gen ru_RU
 locale-gen ru_RU.UTF-8
 update-locale
@@ -11,11 +14,10 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key a
 apt-get update
 apt-get install postgresql-9.6 -y
 
-if ! su postgres -c "psql $DB -c '\q' 2>/dev/null"; then
-    su postgres -c "createdb '$DB'"
+cp -rf /tmp/config/postgresql/ /etc/
 fi
 
 
-#rm -rf /etc/nginx/
-cp -rf /tmp/config/postgresql/ /etc/
-
+if ! su postgres -c "psql $DB -c '\q' 2>/dev/null"; then
+    su postgres -c "createdb '$DB'"
+fi

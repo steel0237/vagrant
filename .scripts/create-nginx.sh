@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if [[ ! -f /usr/sbin/nginx ]]; then
+
+rm -f /etc/nginx/sites-enabled/*
+rm -f /etc/nginx/sites-available/*
+
 echo "deb http://nginx.org/packages/ubuntu/ xenial nginx" > /etc/apt/sources.list.d/nginx.list
 echo "deb-src http://nginx.org/packages/ubuntu/ xenial nginx" >> /etc/apt/sources.list.d/nginx.list
 
@@ -11,3 +16,4 @@ apt-get install nginx -y
 
 rm -rf /etc/nginx/
 cp -rf /tmp/config/nginx/ /etc/
+fi
