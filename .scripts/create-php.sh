@@ -44,7 +44,8 @@ if [[ $type == "nts" ]]; then
 add-apt-repository -y ppa:ondrej/php
 apt-get update
 apt-get install -y pkg-config libssl-dev libxml2 libxml2-dev libcurl4-gnutls-dev libenchant-dev libpq-dev libjpeg-turbo8-dev libpng-dev libfreetype6-dev libpspell-dev libxslt-dev
-apt-get install -y php7.1-fpm=$ver* php7.1-soap php7.1-cli=$ver* php7.1=$ver* php7.1-memcached php7.1-curl php7.1-gmp php7.1-xml php7.1-mbstring php7.1-dev php7.1-igbinary php7.1-imap php7.1-pgsql php7.1-zip php7.1-intl php7.1-gd && update-rc.d php7.1-fpm defaults
+#apt-get install -y php7.1-fpm=$ver* php7.1-soap php7.1-cli=$ver* php7.1=$ver* php7.1-memcached php7.1-curl php7.1-gmp php7.1-xml php7.1-mbstring php7.1-dev php7.1-igbinary php7.1-imap php7.1-pgsql php7.1-zip php7.1-intl php7.1-gd && update-rc.d php7.1-fpm defaults
+apt-get install -y php7.1-fpm php7.1-soap php7.1-cli php7.1 php7.1-memcached php7.1-curl php7.1-gmp php7.1-xml php7.1-mbstring php7.1-dev php7.1-igbinary php7.1-imap php7.1-pgsql php7.1-zip php7.1-intl php7.1-gd && update-rc.d php7.1-fpm defaults
 
 rm -rf /etc/php/7.1
 cp -rf /tmp/config/php/ /etc/
