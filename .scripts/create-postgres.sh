@@ -14,9 +14,9 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key a
 apt-get update
 apt-get install postgresql-9.6 -y
 
-su - postgres -c "psql -c \"alter user postgres with password 'postgres'\" "
-fi
 
+fi
+su - postgres -c "psql -c \"alter user postgres with password 'postgres'\" "
 cp -rf /tmp/config/postgresql/ /etc/
 
 if ! su postgres -c "psql $DB -c '\q' 2>/dev/null"; then
