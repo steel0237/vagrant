@@ -4,7 +4,6 @@ memory: 2048
 cpus: 2
 provider: virtualbox
 name: wearelt
-hostname: wearelt
 
 authorize: ~/.ssh/id_rsa.pub
 
