@@ -160,30 +160,17 @@ class Wearelt
         end
 
 
+                config.vm.provision "shell" do |s|
+                    s.privileged = true
+                    s.name = "Creating config: "
+                    s.path = scriptDir + "/create-config.sh"
+                end
 
-
-
-
-
-        #if settings.has_key?("config")
-        #    settings["config"].each do |config|
-        #        config.vm.provision "fix-no-tty", type:"shell" do |s|
-        #            s.privileged = true
-        #            s.path = scriptDir + "/create-config.sh"
-        #        end
-        #    end
-        #end
-
-
-
-        #config.vm.provision "shell" do |s|
-        #    s.name = "Restarting Nginx"
-        #    s.inline = "sudo service nginx restart; sudo service php7.1-fpm restart"
-        #end
                 config.vm.provision "file" do |f|
                     f.source = File.expand_path("./.scripts/config")
                     f.destination = "/tmp/"
                 end
+
 
                 config.vm.provision "shell" do |s|
                     s.privileged = true

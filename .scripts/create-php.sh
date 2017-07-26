@@ -49,8 +49,6 @@ apt-get install -y php7.1-fpm php7.1-soap php7.1-cli php7.1 php7.1-memcached php
 
 rm -rf /etc/php/7.1
 cp -rf /tmp/config/php/ /etc/
-cp -rf /tmp/config/php/7.1/mods-available/* /etc/php/7.1/cli/conf.d/
-cp -rf /tmp/config/php/7.1/mods-available/* /etc/php/7.1/fpm/conf.d/
 
 fi
 
@@ -63,3 +61,6 @@ fi
 
 
 cp -rf /tmp/config/php/ /etc/
+ln --symbolic /tmp/config/php/7.1/mods-available /etc/php/7.1/fpm/conf.d
+ln --symbolic /tmp/config/php/7.1/mods-available /etc/php/7.1/cli/conf.d
+
